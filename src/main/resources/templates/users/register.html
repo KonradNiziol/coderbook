@@ -15,12 +15,12 @@
         <form method="post" th:action="@{/users/register}" th:object="${user}" novalidate>
 
             <div class="form-group">
-                <label for="name">Name: </label>
+                <label for="name">First Name: </label>
                 <input id="name" type="text" class="form-control" th:field="*{firstName}" placeholder="Enter surname"/>
             </div>
 
             <div class="form-group">
-                <label for="surname">Surname: </label>
+                <label for="surname">Last Name: </label>
                 <input id="surname" type="text" class="form-control"  th:field="*{lastName}" placeholder="Enter Name" name="surname">
             </div>
 
@@ -37,6 +37,13 @@
             <div class="form-group">
                 <label for="repeat_pwd">Password:</label>
                 <input type="password" class="form-control" id="repeat_pwd" th:field="*{passwordConfirmation}" placeholder="Repeat password" name="repeat_pwd">
+            </div>
+
+            <div class="form-group">
+                <label for="role">Select role:</label>
+                <select id="role" th:field="*{role}">
+                    <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+                </select>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>

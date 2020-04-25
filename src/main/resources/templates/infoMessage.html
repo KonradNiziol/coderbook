@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:include="fragments/menu"></div>
+<div class="container">
+
+    <h2>Information</h2>
+    <div class="alert " th:classappend="*{cssStyle}" th:object="${message}">
+        <strong th:text="*{messageStatus}">a</strong>
+        <p th:text="*{message}">The is element represent.</p>
+    </div>
+
+</div>
+
+</body>
+</html>
