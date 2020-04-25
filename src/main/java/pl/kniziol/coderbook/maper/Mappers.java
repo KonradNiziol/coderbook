@@ -7,7 +7,8 @@ public interface Mappers {
 
     static User fromRegisterUserToUser(UserRegistrationDto registerUserDto){
         return User.builder()
-                .username(registerUserDto.getUsername())
+                .firstName(registerUserDto.getFirstName())
+                .lastName(registerUserDto.getLastName())
                 .email(registerUserDto.getEmail())
                 .password(registerUserDto.getPassword())
                 .role(registerUserDto.getRole())

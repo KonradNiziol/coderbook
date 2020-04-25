@@ -11,7 +11,8 @@ import pl.kniziol.coderbook.model.enums.Role;
 @NoArgsConstructor
 @Builder
 public class UserRegistrationDto {
-    private String username;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
     private String passwordConfirmation;
