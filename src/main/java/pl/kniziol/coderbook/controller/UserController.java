@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kniziol.coderbook.dto.UserRegistrationDto;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "users")
 public class UserController {
@@ -16,7 +18,7 @@ public class UserController {
     }
 
     @PostMapping(value = "register")
-    public String registerUser(UserRegistrationDto userRegistrationDto){
+    public String registerUser(@Valid UserRegistrationDto userRegistrationDto){
         //TODO add user to database
         return "User has been creat.";
     }
