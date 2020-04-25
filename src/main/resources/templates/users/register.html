@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div th:include="fragments/menu"></div>
+    <div class="container">
+        <h2>Sing up form:</h2>
+        <form method="post" th:action="@{/users/register}" th:object="${user}" novalidate>
+
+            <div class="form-group">
+                <label for="name">Name: </label>
+                <input id="name" type="text" class="form-control" th:field="*{firstName}" placeholder="Enter surname"/>
+            </div>
+
+            <div class="form-group">
+                <label for="surname">Surname: </label>
+                <input id="surname" type="text" class="form-control"  th:field="*{lastName}" placeholder="Enter Name" name="surname">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input id="email" type="email" class="form-control" th:field="*{email}" placeholder="Enter email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd" th:field="*{password}" placeholder="Enter password" name="pwd">
+            </div>
+
+            <div class="form-group">
+                <label for="repeat_pwd">Password:</label>
+                <input type="password" class="form-control" id="repeat_pwd" th:field="*{passwordConfirmation}" placeholder="Repeat password" name="repeat_pwd">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+
+</body>
+</html>
