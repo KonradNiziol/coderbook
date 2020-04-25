@@ -27,7 +27,7 @@ public class RegisterUserDtoValidator implements Validator {
     public void validate(Object o, Errors errors) {
         if (o instanceof UserRegistrationDto registerUserDto){
 
-            validName(registerUserDto.getUsername(), errors);
+            validName(registerUserDto.getFirstName(), errors);
             validEmail(registerUserDto.getEmail(), errors);
             validPassword(registerUserDto.getPassword(), registerUserDto.getPasswordConfirmation(), errors);
 
