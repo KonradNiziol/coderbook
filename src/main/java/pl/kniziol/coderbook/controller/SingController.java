@@ -63,8 +63,8 @@ public class SingController {
         return "sing/login";
     }
 
-    @GetMapping("activate")
-    public String activateAccount(@PathVariable String token, Model model){
+    @GetMapping("/activate")
+    public String activateAccount(@RequestParam String token, Model model){
         if (token == null || token.isBlank()){
             model.addAttribute("message", MessageInformation.builder()
                     .cssStyle("alert-danger")
