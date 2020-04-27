@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import pl.kniziol.coderbook.exception.AppException;
 import pl.kniziol.coderbook.model.User;
 import pl.kniziol.coderbook.model.VerificationToken;
 import pl.kniziol.coderbook.repository.TokenRepository;
@@ -27,6 +28,19 @@ public class TokenService {
         verificationToken = tokenRepository.save(verificationToken);
         sendEmail(user.getEmail(), verificationToken.getToken());
         return verificationToken;
+    }
+
+    public String activateAccount(String token){
+        VerificationToken verificationToken = tokenRepository
+                .findByToken(token)
+                .orElseThrow(
+                () -> new AppException("This token doesn't exist. Please generate new Token!"));
+
+        User user = verificationToken.getUser();
+        user.setEnabled(true);
+
+        tokenRepository.delete(verificationToken);
+        return user.getFirstName() + " " + user.getLastName() + " Your account was activate! Thanks!";
     }
 
     private void sendEmail(String email, String token) {

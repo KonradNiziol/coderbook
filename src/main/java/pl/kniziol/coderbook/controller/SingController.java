@@ -6,8 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import pl.kniziol.coderbook.dto.MessageInformation;
 import pl.kniziol.coderbook.dto.UserRegistrationDto;
 import pl.kniziol.coderbook.model.enums.Role;
+import pl.kniziol.coderbook.service.TokenService;
 import pl.kniziol.coderbook.service.UserService;
 
 import javax.validation.Valid;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class SingController {
 
     private final UserService userService;
+    private final TokenService tokenService;
 
     @GetMapping(value = "/register")
     public String getUserRegistration(Model model){
@@ -58,6 +61,25 @@ public class SingController {
     public String loginError(Model model){
         model.addAttribute("error", "Authentication error");
         return "sing/login";
+    }
+
+    @GetMapping("activate")
+    public String activateAccount(@PathVariable String token, Model model){
+        if (token == null || token.isBlank()){
+            model.addAttribute("message", MessageInformation.builder()
+                    .cssStyle("alert-danger")
+                    .messageStatus("Danger!")
+                    .message("Verification Token is empty! Try again!")
+                    .build());
+            return "infoMessage";
+        }
+        String message = tokenService.activateAccount(token);
+        model.addAttribute("message", MessageInformation.builder()
+                .cssStyle("alert-success")
+                .messageStatus("Success!")
+                .message(message)
+                .build());
+        return "infoMessage";
     }
 
     private Map<String,Set<String>> getErrorsFrom(List<FieldError> fieldErrors){
