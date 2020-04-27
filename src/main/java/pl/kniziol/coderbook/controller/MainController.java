@@ -16,11 +16,32 @@ public class MainController {
     @GetMapping("/notFound")
     public String notFound(Model model) {
         model.addAttribute("message", MessageInformation.builder()
-                .cssStyle("alert-danger")
+                .cssStyle("cssStyleAlert.danger")
                 .messageStatus("Danger!")
                 .message("Page not found")
                 .build());
         return "infoMessage";
+    }
+
+    @GetMapping("/accessDenied")
+    public String accessDenied(Model model){
+        model.addAttribute("message", MessageInformation.builder()
+                .cssStyle("cssStyleAlert.danger")
+                .messageStatus("message.danger")
+                .message("Access Denied!")
+                .build());
+        return "infoMessage";
+    }
+
+    // TODO for test
+    @GetMapping("/user")
+    public String user(){
+        return "user/user";
+    }
+
+    @GetMapping("/admin")
+    public String admin(){
+        return "admin/admin";
     }
 
 }

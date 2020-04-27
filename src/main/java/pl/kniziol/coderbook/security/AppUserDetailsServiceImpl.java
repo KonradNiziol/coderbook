@@ -24,7 +24,7 @@ public class AppUserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
                 .map(userFromDB -> new User(
-                        userFromDB.getFirstName(),
+                        userFromDB.getEmail(),
                         userFromDB.getPassword(),
                         userFromDB.getEnabled(), true, true, true,
                         List.of(new SimpleGrantedAuthority(userFromDB.getRole().getName()))

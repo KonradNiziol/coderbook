@@ -12,15 +12,22 @@
     <div th:include="fragments/menu"></div>
     <div class="container">
         <h2>Login</h2>
-        <form method="post" th:action="@{/users/login}" th:object="${credentials}" novalidate>
+        <div th:if="${error != null && error != ''}">
+            <h1 class="alert alert-danger" th:text="${error}"></h1>
+        </div>
+
+        <form method="post" th:action="@{/app-login}" novalidate>
+
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter email" name="email">
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
             </div>
+
             <div class="form-group">
-                <label for="pwd">Password:</label>
-                <input type="password" class="form-control" id="pwd" th:field="*{password}" placeholder="Enter password" name="pwd">
+                <label for="password">Password: </label>
+                <input id="password" name="password" type="text" class="form-control" placeholder="Enter password"/>
             </div>
+
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>

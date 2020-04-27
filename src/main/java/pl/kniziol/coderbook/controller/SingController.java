@@ -6,19 +6,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import pl.kniziol.coderbook.dto.LoginCredentials;
 import pl.kniziol.coderbook.dto.UserRegistrationDto;
 import pl.kniziol.coderbook.model.enums.Role;
 import pl.kniziol.coderbook.service.UserService;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/sing")
 @RequiredArgsConstructor
-public class UserController {
+public class SingController {
 
     private final UserService userService;
 
@@ -27,48 +28,50 @@ public class UserController {
         model.addAttribute("error", "");
         model.addAttribute("user", new UserRegistrationDto());
         model.addAttribute("roles", Role.values());
-        return "users/register";
+        return "sing/register";
     }
 
     @PostMapping(value = "/register")
-    public String registerUser(@Valid @ModelAttribute UserRegistrationDto userRegistrationDto, BindingResult bindingResult, Model model){
+    public String registerUser(@Valid @ModelAttribute UserRegistrationDto userRegistrationDto,
+                               BindingResult bindingResult,
+                               Model model){
         if (bindingResult.hasErrors()) {
-            var errors = getErrorsFrom(bindingResult);
+            var errors = getErrorsFrom(bindingResult.getFieldErrors());
 
             model.addAttribute("user", userRegistrationDto);
             model.addAttribute("errors", errors);
             model.addAttribute("roles", Role.values());
-            return "users/register";
+            return "sing/register";
         }
         userService.registerUser(userRegistrationDto);
-        return "redirect:/users/login";
+        return "redirect:/sing/login";
     }
 
 
     @GetMapping("/login")
     public String loginPage(Model model){
         model.addAttribute("error", "");
-        model.addAttribute("credentials", new LoginCredentials());
-        return "users/login";
+        return "sing/login";
     }
 
-    @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute LoginCredentials loginCredentials,  Model model, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            var errors = getErrorsFrom(bindingResult);
-            model.addAttribute("credentials", loginCredentials);
-            model.addAttribute("error", errors);
-            return "users/login";
-        }
-
-        return "index";
+    @GetMapping("/login/error")
+    public String loginError(Model model){
+        model.addAttribute("error", "Authentication error");
+        return "sing/login";
     }
 
-    private Map<String, String> getErrorsFrom(BindingResult bindingResult){
-        return bindingResult
-                .getFieldErrors()
+    private Map<String,Set<String>> getErrorsFrom(List<FieldError> fieldErrors){
+        return fieldErrors
                 .stream()
-                .collect(Collectors.toMap(FieldError::getField, FieldError::getCode));
+                .collect(Collectors.toMap(FieldError::getField,
+                        fieldError -> List.of(
+                                fieldError.getDefaultMessage()
+                                        .trim()
+                                        .split("#"))
+                        .stream()
+                        .flatMap(error -> List.of(error.split("#")).stream())
+                .filter(error -> !error.trim().isEmpty())
+                .collect(Collectors.toSet())));
     }
 
 }

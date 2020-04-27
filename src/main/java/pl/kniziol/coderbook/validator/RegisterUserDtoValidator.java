@@ -45,7 +45,7 @@ public class RegisterUserDtoValidator implements Validator {
     private void validEmail(String email, Errors errors){
         if (!VALID_EMAIL_ADDRESS_REGEX.matcher(email).matches()){
             errors.rejectValue("email", "The e-mail is not correct");
-        } else if (userRepository.findByEmail(email)){
+        } else if (userRepository.findByEmail(email).isPresent()){
             errors.rejectValue("email", email + " is already taken");
         }
     }
