@@ -15,18 +15,23 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenService tokenService;
 
-    public boolean registerUser(UserRegistrationDto userRegistrationDto){
+
+    public User registerUser(UserRegistrationDto userRegistrationDto){
         if (userRegistrationDto == null){
             throw new AppException("User for registration can't be null!");
         }
         var user = Mappers.fromRegisterUserToUser(userRegistrationDto);
         user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
-        user.setEnabled(true);
+        User registeredUser = userRepository.save(user);
 
-        userRepository.save(user);
-        return true;
+        tokenService.createToken(user);
+
+        return registeredUser;
     }
+
+
 
 
 }
