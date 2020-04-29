@@ -26,8 +26,8 @@ public class UserRegistrationDto {
     @Email
     private String email;
     //@ValidPassword
-    private String password;
+    private char[] password;
     //@ValidPassword
-    private String passwordConfirmation;
+    private char[] passwordConfirmation;
     private Role role;
 }

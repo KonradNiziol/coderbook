@@ -23,7 +23,7 @@ public class UserService {
             throw new AppException("User for registration can't be null!");
         }
         var user = Mappers.fromRegisterUserToUser(userRegistrationDto);
-        user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword().toString()));
         User registeredUser = userRepository.save(user);
 
         tokenService.createToken(user);
