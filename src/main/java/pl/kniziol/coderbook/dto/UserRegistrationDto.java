@@ -18,16 +18,18 @@ import javax.validation.constraints.Size;
 public class UserRegistrationDto {
 
     @NotBlank
-    @Size(min = 2)
+    @Size(min = 2, max = 20)
     private String firstName;
     @NotBlank
-    @Size(min = 2)
+    @Size(min = 2, max = 20)
     private String lastName;
+
     @Email
     private String email;
-    //@ValidPassword
+
+    @ValidPassword
     private char[] password;
-    //@ValidPassword
+
     private char[] passwordConfirmation;
     private Role role;
 }

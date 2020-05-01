@@ -13,45 +13,42 @@
 
     <div class="container">
         <h2>Sing up form:</h2>
-        <div th:if="${errors != null && not errors.isEmpty()}">
-
-            <table>
-                <span th:each="errorKey : ${errors.keySet()}">
-                    <h4 class="alert alert-danger" th:text="${errorKey}"></h4>
-                    <td>
-                        <tr th:each="errorValues: ${errors.get(errorKey)}">
-                            <p th:text="${errorValues}"></p>
-                        </tr>
-                    <td>
-                </span>
-            </table>
-
-        </div>
-        <form method="post" th:action="@{/sing/register}" th:object="${user}" novalidate>
+        <form method="post" th:action="@{/sing/register}" th:object="${userRegistrationDto}">
 
             <div class="form-group">
-                <label for="name">First Name: </label>
-                <input id="name" type="text" class="form-control" th:field="*{firstName}" placeholder="Enter surname"/>
+                <label for="firstName">First Name: </label>
+                <input id="firstName" name="firstName" type="text" class="form-control" th:field="*{firstName}" placeholder="Enter First Name"/>
+                <p th:errors="*{firstName}" class="alert-danger"></p>
             </div>
 
             <div class="form-group">
-                <label for="surname">Last Name: </label>
-                <input id="surname" type="text" class="form-control"  th:field="*{lastName}" placeholder="Enter Name" name="surname">
+                <label for="lastName">Last Name: </label>
+                <input id="lastName" name="lastName" type="text" class="form-control"  th:field="*{lastName}" placeholder="Enter Last Name">
+                <p th:errors="*{lastName}" class="alert-danger"></p>
             </div>
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input id="email" type="email" class="form-control" th:field="*{email}" placeholder="Enter email" name="email">
+                <input id="email" name="email" type="email" class="form-control" th:field="*{email}" placeholder="Enter email">
+                <p th:errors="*{email}" class="alert-danger"></p>
             </div>
 
             <div class="form-group">
-                <label for="pwd">Password:</label>
-                <input type="password" class="form-control" id="pwd" th:field="*{password}" placeholder="Enter password" name="pwd">
+                <label for="password">Password:</label>
+                <input id="password"  type="password" name="password" class="form-control" th:field="*{password}" placeholder="Enter password">
+                <ul class="text-left alert-danger"
+                    th:each="error: ${#fields.errors('password')}">
+                    <li th:each="message : ${error.split(',')}">
+                        <p class="error-message"
+                           th:text="${message}"></p>
+                    </li>
+                </ul>
             </div>
 
             <div class="form-group">
-                <label for="repeat_pwd">Password:</label>
-                <input type="password" class="form-control" id="repeat_pwd" th:field="*{passwordConfirmation}" placeholder="Repeat password" name="repeat_pwd">
+                <label for="passwordConfirmation">Repeat Password:</label>
+                <input id="passwordConfirmation" type="password" name="passwordConfirmation" class="form-control" th:field="*{passwordConfirmation}" placeholder="Re-enter password">
+
             </div>
 
             <div class="form-group">
