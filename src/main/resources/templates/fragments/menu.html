@@ -1,3 +1,4 @@
+<html th:with="lang=${#locale.language}" th:lang="${lang}" xmlns:th="http://www.thymeleaf.org">
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -12,6 +13,21 @@
             <li><a href="/app-logout"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
             <li><a href="/sing/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li><a href="/sing/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li>
+                <a id="languages" class="btn btn-secondary dropdown-toggle" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <span class="glyphicon glyphicon-globe"></span>
+                    <div th:switch="__${#locale.language}__" style="display: inline-block">
+                        <p th:case="en">EN</p>
+                        <p th:case="pl">PL</p>
+                    </div>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="languages">
+                    <a class="dropdown-item" th:href="@{?lang=en}">English</a>
+                    <a class="dropdown-item" th:href="@{?lang=pl}">Polish</a>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>

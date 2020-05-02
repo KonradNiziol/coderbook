@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login Page</title>
     <meta charset="utf-8">
@@ -10,32 +10,31 @@
 </head>
 <body>
     <div th:include="fragments/menu"></div>
-
     <div class="container">
-        <h2>Sing up form:</h2>
+        <h2 th:text="#{label.singUpForm}"></h2>
         <form method="post" th:action="@{/sing/register}" th:object="${userRegistrationDto}">
 
             <div class="form-group">
-                <label for="firstName">First Name: </label>
-                <input id="firstName" name="firstName" type="text" class="form-control" th:field="*{firstName}" placeholder="Enter First Name"/>
+                <label for="firstName" th:text="#{label.firstName}"></label>
+                <input id="firstName" name="firstName" type="text" class="form-control" th:field="*{firstName}" th:placeholder="#{label.enter} + #{label.firstName}"/>
                 <p th:errors="*{firstName}" class="alert-danger"></p>
             </div>
 
             <div class="form-group">
-                <label for="lastName">Last Name: </label>
-                <input id="lastName" name="lastName" type="text" class="form-control"  th:field="*{lastName}" placeholder="Enter Last Name">
+                <label for="lastName" th:text="#{label.lastName}"></label>
+                <input id="lastName" name="lastName" type="text" class="form-control"  th:field="*{lastName}" th:placeholder="#{label.enter} + #{label.lastName}">
                 <p th:errors="*{lastName}" class="alert-danger"></p>
             </div>
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input id="email" name="email" type="email" class="form-control" th:field="*{email}" placeholder="Enter email">
+                <input id="email" name="email" type="email" class="form-control" th:field="*{email}" th:placeholder="#{label.enter} + email">
                 <p th:errors="*{email}" class="alert-danger"></p>
             </div>
 
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input id="password"  type="password" name="password" class="form-control" th:field="*{password}" placeholder="Enter password">
+                <label for="password" th:text="#{label.password}"></label>
+                <input id="password"  type="password" name="password" class="form-control" th:field="*{password}" th:placeholder="#{label.enter} + #{label.password}">
                 <ul class="text-left alert-danger"
                     th:each="error: ${#fields.errors('password')}">
                     <li th:each="message : ${error.split(',')}">
@@ -46,18 +45,18 @@
             </div>
 
             <div class="form-group">
-                <label for="passwordConfirmation">Repeat Password:</label>
-                <input id="passwordConfirmation" type="password" name="passwordConfirmation" class="form-control" th:field="*{passwordConfirmation}" placeholder="Re-enter password">
+                <label for="passwordConfirmation" th:text="#{label.repeatPassword}"></label>
+                <input id="passwordConfirmation" type="password" name="passwordConfirmation" class="form-control" th:field="*{passwordConfirmation}" th:placeholder="#{label.repeatPassword}">
 
             </div>
 
             <div class="form-group">
-                <label for="role">Select role:</label>
+                <label for="role" th:text="#{label.selectRole}"></label>
                 <select id="role" th:field="*{role}">
                     <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" th:text="#{label.submit}"></button>
         </form>
     </div>
 
