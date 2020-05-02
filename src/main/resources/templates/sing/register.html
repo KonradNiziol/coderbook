@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login Page</title>
     <meta charset="utf-8">
@@ -35,19 +35,14 @@
             <div class="form-group">
                 <label for="password" th:text="#{label.password}"></label>
                 <input id="password"  type="password" name="password" class="form-control" th:field="*{password}" th:placeholder="#{label.enter} + #{label.password}">
-                <ul class="text-left alert-danger"
-                    th:each="error: ${#fields.errors('password')}">
-                    <li th:each="message : ${error.split(',')}">
-                        <p class="error-message"
-                           th:text="${message}"></p>
-                    </li>
-                </ul>
+                <p th:errors="*{password}" class="alert-danger"></p>
+
             </div>
 
             <div class="form-group">
                 <label for="passwordConfirmation" th:text="#{label.repeatPassword}"></label>
                 <input id="passwordConfirmation" type="password" name="passwordConfirmation" class="form-control" th:field="*{passwordConfirmation}" th:placeholder="#{label.repeatPassword}">
-
+                <p th:errors="*{passwordConfirmation}" class="alert-danger"></p>
             </div>
 
             <div class="form-group">

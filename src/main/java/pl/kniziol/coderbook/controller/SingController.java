@@ -4,15 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.kniziol.coderbook.dto.MessageInformation;
 import pl.kniziol.coderbook.dto.UserRegistrationDto;
 import pl.kniziol.coderbook.model.enums.Role;
 import pl.kniziol.coderbook.service.TokenService;
 import pl.kniziol.coderbook.service.UserService;
-
-import javax.validation.Valid;
+import pl.kniziol.coderbook.validator.UserRegistrationDtoValidator;
 
 @Controller
 @RequestMapping(value = "/sing")
@@ -21,6 +21,12 @@ public class SingController {
 
     private final UserService userService;
     private final TokenService tokenService;
+    private final UserRegistrationDtoValidator userRegistrationDtoValidator;
+
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setValidator(userRegistrationDtoValidator);
+    }
 
     @GetMapping(value = "/register")
     public String getUserRegistration(UserRegistrationDto userRegistrationDto, Model model){
@@ -29,7 +35,7 @@ public class SingController {
     }
 
     @PostMapping(value = "/register")
-    public String registerUser(@Valid @ModelAttribute UserRegistrationDto userRegistrationDto,
+    public String registerUser(@Validated @ModelAttribute UserRegistrationDto userRegistrationDto,
                                BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
             model.addAttribute("roles", Role.values());

@@ -5,11 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.kniziol.coderbook.model.enums.Role;
-import pl.kniziol.coderbook.validator.annotation.ValidPassword;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -17,17 +12,13 @@ import javax.validation.constraints.Size;
 @Builder
 public class UserRegistrationDto {
 
-    @NotBlank
-    @Size(min = 2, max = 20)
+
     private String firstName;
-    @NotBlank
-    @Size(min = 2, max = 20)
+
     private String lastName;
 
-    @Email
     private String email;
 
-    @ValidPassword
     private char[] password;
 
     private char[] passwordConfirmation;
