@@ -10,7 +10,6 @@ public interface Mappers {
                 .firstName(registerUserDto.getFirstName())
                 .lastName(registerUserDto.getLastName())
                 .email(registerUserDto.getEmail())
-                .password(registerUserDto.getPassword())
                 .role(registerUserDto.getRole())
                 .enabled(false)
                 .build();
